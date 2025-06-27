@@ -1,0 +1,22 @@
+name: Count Shell Script Lines
+
+on: [push]
+
+jobs:
+  count-lines:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Count lines in all .sh files
+        run: |
+          find . -name "*.sh" | xargs wc -l > linecount.txt
+          cat linecount.txt
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: shell-script-linecount
+          path: linecount.txt
+
